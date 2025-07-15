@@ -28,7 +28,7 @@
                 <div class="col-md-6">
                     <div class="card-body p-4 justify-content-center align-items-center">
                         <!-- สมัครสมาชิก -->
-                        <h2 class="text-center">SignUP Page</h2>.
+                        <h2 class="text-center">SignUP Page</h2>
                         <form method="POST" action="controls/createUsers.php">
                             <div class="mb-3">
                                 <label for="" class="form-label">First Name</label>

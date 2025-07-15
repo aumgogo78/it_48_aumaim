@@ -30,7 +30,7 @@ session_start();
 
         <main class="p-4 flex-grow-1">
             <h2>แก้ไขเมนูอาหาร</h2>
-            <form action="controls/editMenu.php" method="POST">
+            <form action="controls/editMenu.php" method="POST" enctype="multipart/form-data">
                 <input type="hidden" name="id" value="<?= $user['id']; ?>">
                 <div class="mb-3">
                     <label for="">Food</label>
@@ -46,12 +46,41 @@ session_start();
                     <label for="">Price</label>
                     <input type="text" name="price" class="form-control" value="<?= htmlspecialchars($user['price']) ?>">
                 </div>
+
+                <div class="mb-3">
+                    <label for="">Picture</label>
+                    <input type="file" name="product_image" class="form-control">
+                </div>
                 <button type="submit" class="btn btn-primary">บันทึกการแก้ไข</button>
                 <button type="reset" class="btn btn-danger">รีเซ็ต</button>
-                <a href="users.php" class="btn btn-secondary">ย้อนกลับ</a>
+                <a href="menu.php" class="btn btn-secondary">ย้อนกลับ</a>
             </form>
         </main>
     </div>
-</body>7
+
+    <?php if (isset($_SESSION['success'])) : ?>
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'สำเร็จ',
+                text: '<?= $_SESSION['success']; ?>',
+                confirmButtonText: 'ตกลง'
+            });
+        </script>
+    <?php unset($_SESSION['success']);
+    endif; ?>
+
+    <?php if (isset($_SESSION['error'])) : ?>
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'ผิดพลาด',
+                text: '<?= $_SESSION['error']; ?>',
+                confirmButtonText: 'ตกลง'
+            });
+        </script>
+    <?php unset($_SESSION['error']);
+    endif; ?>
+</body>
 
 </html>

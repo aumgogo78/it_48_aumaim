@@ -29,6 +29,7 @@ include './controls/fetchUser.php'
                 <thead class="table-dark">
                     <tr>
                         <th>ID</th>
+                        <th>Image</th>
                         <th>Firstname Lastname</th>
                         <th>E-mail</th>
                         <th>Tel Number</th>
@@ -41,6 +42,9 @@ include './controls/fetchUser.php'
                     <?php while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) { ?>
                         <tr>
                             <td class="text-center"><?= htmlspecialchars($row['id']); ?></td>
+                            <td>
+                                <img style="max-width: 150px;" src="../assets/imgs/<?= htmlspecialchars($row['profile_image']); ?>" alt="">
+                            </td>
                             <td class="text-left">
                                 <?= htmlspecialchars($row['firstName']) . " " . htmlspecialchars($row['lastName']); ?></td>
                             <td class="text-left"><?= htmlspecialchars($row['email']); ?></td>

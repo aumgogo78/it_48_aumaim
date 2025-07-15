@@ -3,7 +3,7 @@
     session_start();
 
     // ดึงข้อมูลผู้ใช้งานจาก database
-    $sql = "SELECT `id`, `product_name`, `description`, `price`, `created_at` FROM `products`";
+    $sql = "SELECT `id`, `product_name`, `description`, `price`, `created_at`, `product_image` FROM `products`";
     $stmt = $pdo->prepare($sql);
     $stmt->execute();
 ?>

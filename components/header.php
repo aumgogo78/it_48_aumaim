@@ -11,7 +11,7 @@
                         <a href="#" class="nav-link">หน้าหลัก</a>
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="nav-link">อาหาร</a>
+                        <a href="food.php" class="nav-link">อาหาร</a>
                     </li>
                     <li class="nav-item">
                         <a href="user.php" class="nav-link">ผู้ใช้งาน</a>

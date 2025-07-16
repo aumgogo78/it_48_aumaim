@@ -33,6 +33,7 @@ include './controls/fetchFood.php'
             <table class="table table-bordered">
                 <thead class="table-dark">
                     <tr>
+                        <th>No</th>
                         <th>ID</th>
                         <th>Image</th>
                         <th>Food</th>
@@ -43,8 +44,9 @@ include './controls/fetchFood.php'
                     </tr>
                 </thead>
                 <tbody>
-                    <?php while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) { ?>
+                    <?php $i=1; while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) { ?>
                     <tr>
+                        <td class="text-center"><?= $i++; ?></td>
                         <td class="text-center"><?= htmlspecialchars($row['id']); ?></td>
                         <td class="text-center px-0">
                             <img style="max-width: 200px;" src="../assets/imgs/<?= htmlspecialchars($row['product_image']); ?>" alt="">

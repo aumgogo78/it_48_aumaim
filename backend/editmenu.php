@@ -34,23 +34,29 @@ session_start();
                 <input type="hidden" name="id" value="<?= $user['id']; ?>">
                 <div class="mb-3">
                     <label for="">Food</label>
-                    <input type="text" name="product_name" class="form-control" value="<?= htmlspecialchars($user['product_name']); ?>">
+                    <input type="text" name="product_name" class="form-control" value="<?= htmlspecialchars($food['product_name']); ?>">
                 </div>
 
                 <div class="mb-3">
                     <label for="">Description</label>
-                    <input type="text" name="description" class="form-control" value="<?= htmlspecialchars($user['description']); ?>">
+                    <input type="text" name="description" class="form-control" value="<?= htmlspecialchars($food['description']); ?>">
                 </div>
 
                 <div class="mb-3">
                     <label for="">Price</label>
-                    <input type="text" name="price" class="form-control" value="<?= htmlspecialchars($user['price']) ?>">
+                    <input type="text" name="price" class="form-control" value="<?= htmlspecialchars($food['price']) ?>">
                 </div>
 
                 <div class="mb-3">
                     <label for="">Picture</label>
                     <input type="file" name="product_image" class="form-control">
                 </div>
+
+                <div class="mb-3 d-flex flex-column">
+                    <label for="">Show Picture</label>
+                    <img style="max-width: 200px;" src="../assets/imgs/<?= htmlspecialchars($food['product_image']); ?>" alt="">
+                </div>
+
                 <button type="submit" class="btn btn-primary">บันทึกการแก้ไข</button>
                 <button type="reset" class="btn btn-danger">รีเซ็ต</button>
                 <a href="menu.php" class="btn btn-secondary">ย้อนกลับ</a>

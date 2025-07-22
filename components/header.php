@@ -8,13 +8,16 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a href="#" class="nav-link">หน้าหลัก</a>
+                        <a href="index.php" class="nav-link">หน้าหลัก</a>
                     </li>
                     <li class="nav-item">
                         <a href="food.php" class="nav-link">อาหาร</a>
                     </li>
                     <li class="nav-item">
                         <a href="user.php" class="nav-link">ผู้ใช้งาน</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="cart.php" class="nav-link">ตระกร้าสินค้า</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">

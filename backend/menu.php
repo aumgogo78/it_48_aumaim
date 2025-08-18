@@ -62,6 +62,7 @@ include './controls/fetchFood.php'
                             <button class="btn btn-sm btn-danger" onclick="confirmDelete(<?= $row['id'] ?>)">
                                 <i class="bi bi-trash3-fill"></i>
                             </button>
+                            
                             <script>
                             function confirmDelete(id) {
                                 Swal.fire({

@@ -1,5 +1,37 @@
 <?php
 session_start();
+//เพิ่มจำนวนสินค้าในตะกร้า
+if (isset($_POST['action']) && $_POST['action'] == 'increase' && isset($_POST['productId'])) {
+    $productId = $_POST['productId'];
+    foreach ($_SESSION['cart'] as $key => $item) { //ใช้ $key เพื่อไม่ให้มีการอ้างอิงโดยตรง
+        if ($item['productId'] == $productId) {
+            $_SESSION['cart'][$key]['quantity'] += 1;
+            break;
+        }
+    }
+}
+
+//ลดจำนวนสินค้าในตะกร้า
+if (isset($_POST['action']) && $_POST['action'] == 'decrease' && isset($_POST['productId'])) {
+    $productId = $_POST['productId'];
+    foreach ($_SESSION['cart'] as $key => $item) {
+        if ($item['productId'] == $productId && $item['quantity'] > 1) {
+            $_SESSION['cart'][$key]['quantity'] -= 1;
+            break;
+        }
+    }
+}
+
+//ลบสินค้าออกจากตะกร้า
+if (isset($_POST['action']) && $_POST['action'] == 'remove' && isset($_POST['productId'])) {
+    $productId = $_POST['productId'];
+    foreach ($_SESSION['cart'] as $key => $item) {
+        if ($item['productId'] == $productId) {
+            unset($_SESSION['cart'][$key]);
+            break;
+        }
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -42,10 +74,53 @@ session_start();
                                             <p>Quantity : <?= htmlspecialchars($item['quantity']); ?></p>
                                         </div>
                                     </div>
-                                    <div class="btn-group" role="group" aria-label="Basic example">
-                                        <button class="btn btn-success"><i class="bi bi-plus-circle-fill"></i></button>
+
+                                    <div class="btn-group gap-2" role="group" aria-label="Basic example">
+                                        <form method="post" class="d-inline">
+                                            <input type="hidden" name="productId" value="<?= htmlspecialchars($item['productId']); ?>">
+                                            <input type="hidden" name="action" value="increase">
+                                            <button type="submit" class="btn btn-success">
+                                                <i class="bi bi-plus-circle-fill"></i> เพิ่ม
+                                            </button>
+                                        </form>
+
+                                        <form method="post" class="d-inline">
+                                            <input type="hidden" name="productId" value="<?= htmlspecialchars($item['productId']); ?>">
+                                            <input type="hidden" name="action" value="decrease">
+                                            <button type="submit" class="btn btn-warning">
+                                                <i class="bi bi-dash-circle-fill"></i> ลด
+                                            </button>
+                                        </form>
+
+                                        <form method="post" class="d-inline" onsubmit="return confirmDelete(event);">
+                                            <input type="hidden" name="productId" value="<?= htmlspecialchars($item['productId']); ?>">
+                                            <input type="hidden" name="action" value="remove">
+                                            <button type="submit" class="btn btn-danger">
+                                                <i class="bi bi-trash-fill"></i> ลบ
+                                            </button>
+                                        </form>
+
+                                        <script>
+                                            function confirmDelete(event) {
+                                            event.preventDefault();
+                                            const form = event.target;
+                                            Swal.fire({
+                                                text: "คุณต้องการลบเมนูนี้ออกจากตะกร้าหรือไม่",
+                                                icon: 'warning',
+                                                showCancelButton: true,
+                                                confirmButtonText: 'ใช่, ลบเลย!',
+                                                cancelButtonText: 'ยกเลิก'
+                                            }).then((result) => {
+                                                if (result.isConfirmed) {
+                                                   form.submit();
+                                                }
+                                            });
+                                        }
+                                        </script>
+
+                                        <!-- <button class="btn btn-success"><i class="bi bi-plus-circle-fill"></i></button>
                                         <button class="btn btn-warning"><i class="bi bi-dash-circle-fill"></i></button>
-                                        <button class="btn btn-danger"><i class="bi bi-trash-fill"></i></button>
+                                        <button class="btn btn-danger"><i class="bi bi-trash-fill"></i></button> -->
                                     </div>
                                 <?php endforeach; ?>
                             <?php else: ?>

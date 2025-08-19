@@ -32,6 +32,17 @@ if (isset($_POST['action']) && $_POST['action'] == 'remove' && isset($_POST['pro
         }
     }
 }
+
+// คำนวณราคาทั้งหมด
+$totalPrice = 0;
+if (isset($_SESSION['cart']) && count($_SESSION['cart']) > 0) {
+    foreach ($_SESSION['cart'] as $item) {
+        $totalPrice += $item['productPrice'] * $item['quantity'];
+    }
+}
+
+include './controls/fetchAddress.php';
+
 ?>
 
 <!DOCTYPE html>
@@ -70,8 +81,9 @@ if (isset($_POST['action']) && $_POST['action'] == 'remove' && isset($_POST['pro
                                         <img src="./assets/imgs/<?= htmlspecialchars($item['productImage']); ?>" alt="" style="height:150px; width: 150px; object-fit: cover;" class="rounded-3">
                                         <div class="ms-4">
                                             <h3 class="mb-3 mt-2"><?= htmlspecialchars($item['productName']); ?></h3>
-                                            <p class="mb-0">Price : <?= htmlspecialchars($item['productPrice']); ?></p>
+                                            <p class="mb-0">Price : <?= htmlspecialchars($item['productPrice']); ?> ฿</p>
                                             <p>Quantity : <?= htmlspecialchars($item['quantity']); ?></p>
+                                            <p>Total Price: <?= htmlspecialchars($item['productPrice'] * $item['quantity']) ?></p>
                                         </div>
                                     </div>
 
@@ -79,55 +91,67 @@ if (isset($_POST['action']) && $_POST['action'] == 'remove' && isset($_POST['pro
                                         <form method="post" class="d-inline">
                                             <input type="hidden" name="productId" value="<?= htmlspecialchars($item['productId']); ?>">
                                             <input type="hidden" name="action" value="increase">
-                                            <button type="submit" class="btn btn-success">
-                                                <i class="bi bi-plus-circle-fill"></i> เพิ่ม
+                                            <button type="submit" class="btn btn-success btn-lg">
+                                                <i class="bi bi-plus-circle-fill"></i>
                                             </button>
                                         </form>
 
                                         <form method="post" class="d-inline">
                                             <input type="hidden" name="productId" value="<?= htmlspecialchars($item['productId']); ?>">
                                             <input type="hidden" name="action" value="decrease">
-                                            <button type="submit" class="btn btn-warning">
-                                                <i class="bi bi-dash-circle-fill"></i> ลด
+                                            <button type="submit" class="btn btn-warning btn-lg">
+                                                <i class="bi bi-dash-circle-fill"></i>
                                             </button>
                                         </form>
 
                                         <form method="post" class="d-inline" onsubmit="return confirmDelete(event);">
                                             <input type="hidden" name="productId" value="<?= htmlspecialchars($item['productId']); ?>">
                                             <input type="hidden" name="action" value="remove">
-                                            <button type="submit" class="btn btn-danger">
-                                                <i class="bi bi-trash-fill"></i> ลบ
+                                            <button type="submit" class="btn btn-danger btn-lg">
+                                                <i class="bi bi-trash-fill"></i>
                                             </button>
                                         </form>
 
                                         <script>
                                             function confirmDelete(event) {
-                                            event.preventDefault();
-                                            const form = event.target;
-                                            Swal.fire({
-                                                text: "คุณต้องการลบเมนูนี้ออกจากตะกร้าหรือไม่",
-                                                icon: 'warning',
-                                                showCancelButton: true,
-                                                confirmButtonText: 'ใช่, ลบเลย!',
-                                                cancelButtonText: 'ยกเลิก'
-                                            }).then((result) => {
-                                                if (result.isConfirmed) {
-                                                   form.submit();
-                                                }
-                                            });
-                                        }
+                                                event.preventDefault();
+                                                const form = event.target;
+                                                Swal.fire({
+                                                    text: "คุณต้องการลบเมนูนี้ออกจากตะกร้าหรือไม่",
+                                                    icon: 'warning',
+                                                    showCancelButton: true,
+                                                    confirmButtonText: 'ใช่, ลบเลย!',
+                                                    cancelButtonText: 'ยกเลิก'
+                                                }).then((result) => {
+                                                    if (result.isConfirmed) {
+                                                        form.submit();
+                                                    }
+                                                });
+                                            }
                                         </script>
 
-                                        <!-- <button class="btn btn-success"><i class="bi bi-plus-circle-fill"></i></button>
-                                        <button class="btn btn-warning"><i class="bi bi-dash-circle-fill"></i></button>
-                                        <button class="btn btn-danger"><i class="bi bi-trash-fill"></i></button> -->
                                     </div>
                                 <?php endforeach; ?>
-                            <?php else: ?>
                                 </li>
                         </ul>
+
+                        <div class="mt-4">
+                            <h4><strong>Total Price: <?= number_format($totalPrice, 2) ?> ฿</strong></h4>
+                        </div>
+
+                    <?php else: ?>
                         <p class="text-center">ไม่มีสินค้าในตระกร้า</p>
                     <?php endif; ?>
+
+                    <!-- ******** -->
+                    <div class="mt-4 text-right">
+                        <h4><strong>Address</strong></h4>
+                        <hr>
+                        <p><strong>Name: <?php echo htmlspecialchars($row['firstName'] ." ". $row['lastName']); ?></strong></p>
+                        <p><strong>Email: <?php echo htmlspecialchars($row['email']); ?></strong></p>
+                        <p><strong>Tel: <?php echo htmlspecialchars($row['phone']); ?></strong></p>
+                        <p><strong>Address: <?php echo htmlspecialchars($row['address']); ?></strong></p>
+                    </div>
 
                 </div>
             </div>
@@ -136,5 +160,6 @@ if (isset($_POST['action']) && $_POST['action'] == 'remove' && isset($_POST['pro
 
     <?php include './components/footer.php' ?>
 </body>
+
 
 </html>
